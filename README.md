@@ -25,31 +25,42 @@ python tests/test_tree_manager.py
 - **Attributes**:
   - `id`: Unique identifier for the tree.
   - `name`: Name of the tree.
-  - `description`: A brief description of the tree.
-  - `root_node_id`: Reference to the root node of the tree.
   - `created_at`: Timestamp of when the tree was created.
-  - `updated_at`: Timestamp of the last update to the tree.
 - **Relationships**: Has many `TreeNode` and `TreeTag` instances.
+- **Methods**:
+  - `get(session, id)`: Retrieves a tree by its ID.
+  - `get_by_tag(session, tag_name)`: Retrieves a tree by its tag name.
+  - `create_tag(session, tag_name, description=None)`: Creates a new tag for the tree.
+  - `create_new_tree_version_from_tag(session, tag_name)`: Creates a new tree version based on a specified tag.
+  - `restore_from_tag(session, tag_name)`: Restores the tree to a state defined by a specified tag.
+  - `add_node(session, data)`: Adds a new node to the tree.
+  - `add_edge(session, incoming_node_id, outgoing_node_id, data=None)`: Adds a new edge between two nodes.
+  - `get_root_nodes(session)`: Retrieves all root nodes of the tree.
+  - `get_node(session, node_id)`: Retrieves a node by its ID.
+  - `get_child_nodes(session, node_id)`: Retrieves child nodes of a specified node.
+  - `get_parent_nodes(session, node_id)`: Retrieves parent nodes of a specified node.
+  - `get_node_edges(session, node_id)`: Retrieves all edges connected to a specified node.
+  - `get_nodes_at_depth(session, depth)`: Retrieves nodes at a specified depth in the tree.
+  - `find_path(session, start_node_id, end_node_id)`: Finds a path between two nodes.
 
 ### TreeNode
 
 - **Attributes**:
   - `id`: Unique identifier for the node.
   - `tree_id`: Reference to the associated tree.
-  - `parent_id`: Reference to the parent node (if any).
-  - `name`: Name of the node.
   - `data`: Additional data associated with the node.
   - `created_at`: Timestamp of when the node was created.
-  - `updated_at`: Timestamp of the last update to the node.
-- **Relationships**: Has many `TreeEdge` instances and may have a parent and many child `TreeNode` instances.
+- **Relationships**: Has many incoming and outgoing `TreeEdge` instances.
+- **Methods**:
+  - `has_incoming_edges(session)`: Checks if the node has any incoming edges.
 
 ### TreeEdge
 
 - **Attributes**:
   - `id`: Unique identifier for the edge.
-  - `source_node_id`: Reference to the source node.
-  - `target_node_id`: Reference to the target node.
-  - `weight`: Optional weight for the edge.
+  - `incoming_node_id`: Reference to the incoming node.
+  - `outgoing_node_id`: Reference to the outgoing node.
+  - `data`: Additional data associated with the edge.
   - `created_at`: Timestamp of when the edge was created.
 - **Relationships**: Connects two `TreeNode` instances.
 
@@ -58,7 +69,8 @@ python tests/test_tree_manager.py
 - **Attributes**:
   - `id`: Unique identifier for the tag.
   - `tree_id`: Reference to the associated tree.
-  - `name`: Name of the tag.
+  - `tag_name`: Name of the tag.
+  - `description`: Description of the tag.
   - `snapshot`: JSON representation of the tree's state at the time of tagging.
   - `created_at`: Timestamp of when the tag was created.
 - **Relationships**: Belongs to a `Tree`.
