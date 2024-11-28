@@ -13,7 +13,7 @@ pip install -e .
 ### Run tests
 
 ```bash
-python tests/test_tree_manager.py
+python -m unittest tests/test_tree_manager.py
 ```
 
 ### Populate the db with sample data
