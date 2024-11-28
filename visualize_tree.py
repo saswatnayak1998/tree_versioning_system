@@ -34,6 +34,7 @@ def visualize_tree_by_id(session, tree_id):
         nx.draw(G, pos, with_labels=True, labels=node_labels, node_size=3000, node_color="skyblue", font_size=10)
         nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=9)
         plt.title(f"Visualization of Tree ID {tree.id}: {tree.name}")
+        plt.savefig(f"tree_figures/tree_visualization_{tree.id}.png")
         plt.show()
 
     except Exception as e:

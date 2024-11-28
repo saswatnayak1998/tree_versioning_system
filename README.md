@@ -74,3 +74,13 @@ python tests/test_tree_manager.py
   - `snapshot`: JSON representation of the tree's state at the time of tagging.
   - `created_at`: Timestamp of when the tag was created.
 - **Relationships**: Belongs to a `Tree`.
+
+### Visualize the tree by id
+
+```bash
+python visualize_tree.py <tree_id>
+```
+
+# Example
+
+![Tree Structure](figures/tree_visualization_1.png "Tree Structure Visualization")
