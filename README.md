@@ -98,6 +98,9 @@ python visualize_tree.py <tree_id>
 ## Improvements for larger databases
 
 In the code, there are several areas where SQL indexes can improve performance, especially in queries that filter or join on specific columns. Here are some areas where I can add indexes:
-TreeTag Table: Since I frequently query TreeTag by tree_id and tag_name, adding a composite index on these columns can speed up lookups.
-TreeNode Table: I often query TreeNode by tree_id and id. Adding an index on tree_id can help with performance when filtering nodes by tree.
-TreeEdge Table: I frequently filter by incoming_node_id and outgoing_node_id. Adding indexes on these columns can improve the performance of edge lookups.
+
+- TreeTag Table: Since I frequently query TreeTag by tree_id and tag_name, adding a composite index on these columns can speed up lookups.
+
+- TreeNode Table: I often query TreeNode by tree_id and id. Adding an index on tree_id can help with performance when filtering nodes by tree.
+
+- TreeEdge Table: I frequently filter by incoming_node_id and outgoing_node_id. Adding indexes on these columns can improve the performance of edge lookups.
