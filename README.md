@@ -91,6 +91,13 @@ python visualize_tree.py <tree_id>
 
 ![Tree Structure](tree_figures/tree_visualization_1.png "Tree Structure Visualization")
 
-### Designs Desisions
+## Design Desisions
 
-I made a new table called TreeTag which keeps the tag for a particular Tree. When you do create_tag for a particular tree, it saves the state of that tree in the field of snapshot as json. This allows to revert back to the tree structure when the tag was created.
+- I made a new table called TreeTag which keeps the tag for a particular Tree. When you do create_tag for a particular tree, it saves the state of that tree in the field of snapshot as json. This allows to revert back to the tree structure when the tag was created.
+
+## Improvements for larger databases
+
+In the code, there are several areas where SQL indexes can improve performance, especially in queries that filter or join on specific columns. Here are some areas where I can add indexes:
+TreeTag Table: Since I frequently query TreeTag by tree_id and tag_name, adding a composite index on these columns can speed up lookups.
+TreeNode Table: I often query TreeNode by tree_id and id. Adding an index on tree_id can help with performance when filtering nodes by tree.
+TreeEdge Table: I frequently filter by incoming_node_id and outgoing_node_id. Adding indexes on these columns can improve the performance of edge lookups.
