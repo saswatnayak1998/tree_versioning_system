@@ -22,6 +22,8 @@ session = SessionLocal()
 
 Refer to examples on how to run the code in `bash playground.ipynb `
 
+### Run Tests
+
 ```bash
 python -m unittest tests/test_tree_manager.py
 ```
