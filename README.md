@@ -10,6 +10,14 @@ cd tree_manager
 pip install -e .
 ```
 
+###Start a db session
+
+```bash
+from tree_manager import Tree, TreeNode, TreeEdge, init_db, SessionLocal
+init_db()
+session = SessionLocal()
+```
+
 ### Run tests
 
 ```bash
