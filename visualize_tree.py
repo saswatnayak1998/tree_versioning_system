@@ -1,5 +1,6 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import sys
 from tree_manager import Tree, TreeNode, TreeEdge, init_db, SessionLocal
 
 def visualize_tree_by_id(session, tree_id):
@@ -41,7 +42,12 @@ def visualize_tree_by_id(session, tree_id):
         session.close()
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python visualize.py <tree_id>")
+        sys.exit(1)
+
+    tree_id = int(sys.argv[1])
     init_db()
     session = SessionLocal()
 
-    visualize_tree_by_id(session, tree_id=4)
+    visualize_tree_by_id(session, tree_id=tree_id)
