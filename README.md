@@ -16,6 +16,12 @@ pip install -e .
 python tests/test_tree_manager.py
 ```
 
+### Populate the db with sample data
+
+```bash
+python populate.py
+```
+
 ### Database Implementation
 
 ## Models
