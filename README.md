@@ -93,7 +93,7 @@ python visualize_tree.py <tree_id>
 
 ## Design Desisions
 
-- I made a new table called TreeTag which keeps the tag for a particular Tree. When you do create_tag for a particular tree, it saves the state of that tree in the field of snapshot as json. This allows to revert back to the tree structure when the tag was created.
+- Apart from the models mentioned in the document, I made a new table called TreeTag which keeps the tag for a particular Tree. When you do create_tag for a particular tree, it saves the state of that tree in the field of snapshot as json. This allows to revert back to the tree structure when the tag was created.
 
 ## Improvements for larger databases
 
