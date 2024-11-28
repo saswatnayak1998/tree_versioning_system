@@ -83,4 +83,4 @@ python visualize_tree.py <tree_id>
 
 # Example
 
-![Tree Structure](figures/tree_visualization_1.png "Tree Structure Visualization")
+![Tree Structure](tree_figures/tree_visualization_1.png "Tree Structure Visualization")
