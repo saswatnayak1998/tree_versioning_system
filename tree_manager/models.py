@@ -29,9 +29,8 @@ class Tree(Base):
     @classmethod
     def get(cls, session, id):
         return session.query(cls).filter_by(id=id).first()
-
-    @classmethod
-    def get_by_tag(cls, session, tag_name):
+    
+    def get_by_tag(self, session, tag_name):
         tag = session.query(TreeTag).filter_by(tag_name=tag_name).first()
         return tag.tree if tag else None
 
@@ -39,6 +38,7 @@ class Tree(Base):
         try:
             existing_tag = session.query(TreeTag).filter_by(tree_id=self.id, tag_name=tag_name).first()
             if existing_tag:
+                print(f"Tag '{tag_name}' already exists for this tree with description: '{existing_tag.description}'")
                 return f"Tag '{tag_name}' already exists for this tree with description: '{existing_tag.description}'"
 
             nodes = session.query(TreeNode).filter_by(tree_id=self.id).all()
@@ -172,6 +172,52 @@ class Tree(Base):
         return session.query(TreeEdge).filter(
             (TreeEdge.incoming_node_id == node_id) | (TreeEdge.outgoing_node_id == node_id)
         ).all()
+
+    def traverse_tree(self, session, start_node_id):
+        """
+        Traverse the tree starting from a given node and gather information about 
+        all connected nodes and edges.
+
+        Args:
+            session: SQLAlchemy session to interact with the database.
+            start_node_id: The ID of the starting node for traversal.
+
+        Returns:
+            dict: A dictionary containing information about the nodes and edges.
+        """
+        def traverse(node_id, visited):
+            if node_id in visited:
+                return  
+            visited.add(node_id)
+            
+            node = session.query(TreeNode).filter_by(id=node_id).first()
+            if not node:
+                return
+            
+            node_info = {"id": node.id, "data": node.data, "edges": []}
+            result["nodes"].append(node_info)
+
+            outgoing_edges = session.query(TreeEdge).filter_by(incoming_node_id=node_id).all()
+            for edge in outgoing_edges:
+                edge_info = {
+                    "incoming_node_id": edge.incoming_node_id,
+                    "outgoing_node_id": edge.outgoing_node_id,
+                    "data": edge.data,
+                }
+                node_info["edges"].append(edge_info)
+                result["edges"].append(edge_info)
+
+                traverse(edge.outgoing_node_id, visited)
+
+        result = {"nodes": [], "edges": []}
+        visited = set()  
+
+        traverse(start_node_id, visited)
+        return result
+
+    def start_traversal(self, session):
+        
+        self.traverse_tree(session, rood_id = 1)
 
     def get_nodes_at_depth(self, session, depth):
         def traverse(node, current_depth):
